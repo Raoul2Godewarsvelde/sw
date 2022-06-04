@@ -13,6 +13,13 @@ const Nav = () => {
                             Home
                     </Link>
                 </li>
+                <li>
+                    <Link
+                        onClick={() => console.log('callback after route change')}
+                        to='/photography'>
+                            Photography
+                    </Link>
+                </li>
             </ul>
         </nav>
     )

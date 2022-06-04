@@ -1,9 +1,11 @@
 import React from 'react'
 
+import { Home } from '@components/Home/Registration/index'
+
 const index = () => {
 
     return (
-        <div>Home</div>
+        <Home />
     )
 }
 

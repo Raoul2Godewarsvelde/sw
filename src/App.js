@@ -9,7 +9,6 @@ import './App.scss'
 function App() {
   return (
     <>
-
       <Router>
         <Header />
         <Routes>

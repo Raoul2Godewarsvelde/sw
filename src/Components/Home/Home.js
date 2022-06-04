@@ -5,7 +5,7 @@ import '@styles/Components/Home/home.scss'
 const Home = () => {
 
     return (
-        <div id='home__wrapper'>Home</div>
+        <div>Home</div>
     )
 }
 

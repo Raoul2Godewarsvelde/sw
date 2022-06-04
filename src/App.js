@@ -1,12 +1,18 @@
-import './App.scss'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import Scene from "./scene/Scene";
+import Home from '@pages/Home/index'
+
+import './App.scss'
 
 function App() {
   return (
-    <>
-      <Scene />
-    </>
+    <Router>
+      {/* <Header setMySmallWorldActivated={setMySmallWorldActivated} /> */}
+
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
+    </Router>
   )
 }
 

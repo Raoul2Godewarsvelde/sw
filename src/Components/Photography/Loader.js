@@ -4,7 +4,7 @@ import { useFrame } from 'react-three-fiber'
 
 import lerp from 'lerp'
 
-import Picture from './components/Picture'
+import { Picture } from '@components/Photography/Registration/index'
 
 const Loader = () => {
 

@@ -3,7 +3,7 @@ import { useFrame } from 'react-three-fiber'
 
 import lerp from 'lerp'
 
-import './CustomMaterial'
+import { PictureMaterial } from '@assets/Materials/Registration/index'
 
 import {
     useBlock
@@ -35,7 +35,7 @@ const Picture = forwardRef(({ color = 'white', shift = 1, opacity = 1, args, map
                 attach='geometry'
                 args={args}
             />
-            <customMaterial
+            <PictureMaterial
                 ref={material}
                 attach='material'
                 color={color}

@@ -31,11 +31,11 @@ const Camera = forwardRef((props, ref) => {
             <PerspectiveCamera
                 ref={ref}
                 {...props}
-                /* aspect={canvasWidth / canvasHeight} */
-                /* fov={2 * Math.atan((canvasHeight / 2) / props.cameraPositionZ) * (180 / Math.PI)} */
+                aspect={canvasWidth / canvasHeight}
+                fov={2 * Math.atan((canvasHeight / 2) / props.cameraPositionZ) * (180 / Math.PI)}
                 onUpdate={self => self.updateProjectionMatrix()}
             />
-            <OrbitControls />
+            {/* <OrbitControls /> */}
         </>
     )
 })

@@ -2,7 +2,7 @@ const BlocksDatas = [
     {
         index: 0,
         category: 'Projects',
-        image: '/Assets/Images/the-8-elements-of-kuwait.jpg',
+        image: '/assets/pictures/jpeg/VerbalShoota.jpg',
         html: {
             title: {
                 category: 'Projects',
@@ -19,7 +19,7 @@ const BlocksDatas = [
     {
         index: 1,
         category: 'DigitalDesign',
-        image: '/Assets/Images/the-brink-office.jpg',
+        image: '/assets/pictures/jpeg/VerbalShoota.jpg',
         html: {
             title: {
                 category: 'Digital Design',
@@ -36,7 +36,7 @@ const BlocksDatas = [
     {
         index: 2,
         category: 'Distribution',
-        image: '/Assets/Images/lifestyle.jpg',
+        image: '/assets/pictures/jpeg/VerbalShoota.jpg',
         html: {
             title: {
                 category: 'Distribution',
@@ -53,7 +53,7 @@ const BlocksDatas = [
     {
         index: 3,
         category: 'Projects',
-        image: '/Assets/Images/faces-of-kuwait.jpg',
+        image: '/assets/pictures/jpeg/VerbalShoota.jpg',
         html: {
             title: {
                 category: 'Projects',
@@ -70,7 +70,7 @@ const BlocksDatas = [
     {
         index: 4,
         category: 'Distribution',
-        image: '/Assets/Images/sports.jpg',
+        image: '/assets/pictures/jpeg/VerbalShoota.jpg',
         html: {
             title: {
                 category: 'Distribution',
@@ -87,7 +87,7 @@ const BlocksDatas = [
     {
         index: 5,
         category: 'Projects',
-        image: '/Assets/Images/un-divided.jpg',
+        image: '/assets/pictures/jpeg/VerbalShoota.jpg',
         html: {
             title: {
                 category: 'Projects',

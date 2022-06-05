@@ -1,7 +1,5 @@
 import React from 'react'
 
-import * as THREE from 'three'
-
 const DirectionalLight = ({ position, color, intensity }) => {
     return (
         <directionalLight

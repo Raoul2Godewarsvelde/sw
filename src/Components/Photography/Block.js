@@ -1,9 +1,13 @@
 import React, { forwardRef, useState } from 'react'
 
+import * as THREE from 'three'
+
 import { useSpring } from '@react-spring/core'
 import { a } from '@react-spring/three'
 
-const Block = forwardRef(({ index, canvasWidth, canvasHeight, blockWidth, blockHeight, stepLength}, ref) => {
+import '@components/Materials/BlockMaterial'
+
+const Block = forwardRef(({ index, canvasWidth, canvasHeight, blockWidth, blockHeight, stepLength, uTexture }, ref) => {
     
     const [active, setActive] = useState(0)
 
@@ -51,13 +55,12 @@ const Block = forwardRef(({ index, canvasWidth, canvasHeight, blockWidth, blockH
                     attach='geometry'
                     args={[blockWidth, blockHeight, 1, 1]}
                 />
-                <meshStandardMaterial color={'white'} />
-                {/* <blockMaterial
+                <blockMaterial
                     attach='material'
                     uTexture={uTexture}
                     side={THREE.DoubleSide}
                     transparent
-                /> */}
+                />
             </a.mesh>
         </>
     )

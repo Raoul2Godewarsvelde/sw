@@ -1,9 +1,11 @@
-import React, { createRef, useRef, useState, useEffect } from 'react'
+import React, { createRef, useRef, useState, useEffect, useMemo } from 'react'
+
+import * as THREE from 'three'
+import { useFrame, useLoader } from '@react-three/fiber'
 
 import { Block } from '@components/Photography/Registration/index'
 
 import BLOCKS_DATAS from '@json/Components/Photography/BlocksDatas'
-import { useFrame } from '@react-three/fiber'
 
 const blocks_number = Object.keys(BLOCKS_DATAS).length
 
@@ -33,6 +35,14 @@ const Carousel = () => {
     // STATES
 
     const [blocksRef, setBlocksRef] = useState([])
+
+    // IMAGES
+
+    const images = useLoader(
+        THREE.TextureLoader,
+        BLOCKS_DATAS.map(({ image }) => image)
+    )
+    useMemo(() => images.forEach((texture) => (texture.minFilter = THREE.LinearFilter)), [images])
 
     // USE EFFECT
 
@@ -88,6 +98,7 @@ const Carousel = () => {
                     blockWidth={block_width}
                     blockHeight={block_height}
                     stepLength={step_length}
+                    uTexture={images[index]}
                 />
             ))}
         </group>

@@ -3,9 +3,8 @@ import React, { createRef, Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 
 import { Camera } from '@components/Cameras/Registration/index'
-import { AmbientLight, DirectionalLight } from '@components/Lights/Registration/index'
 
-import { Carousel } from '@components/Photography/Registration/index'
+import { Carousel, Lights } from '@components/Photography/Registration/index'
 
 const Scene = () => {
     
@@ -21,8 +20,7 @@ const Scene = () => {
                 position={[0, 0, camera_position_z]}
                 cameraPositionZ={camera_position_z}
             />
-            <AmbientLight />
-            <DirectionalLight />
+            <Lights />
             <Suspense fallback={null}>
                 <Carousel />
             </Suspense>

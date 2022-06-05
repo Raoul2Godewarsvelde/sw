@@ -1,7 +1,5 @@
 import React, { forwardRef, useState } from 'react'
 
-import * as THREE from 'three'
-
 import { useSpring } from '@react-spring/core'
 import { a } from '@react-spring/three'
 
@@ -53,7 +51,7 @@ const Block = forwardRef(({ index, canvasWidth, canvasHeight, blockWidth, blockH
                     attach='geometry'
                     args={[blockWidth, blockHeight, 1, 1]}
                 />
-                <meshStandardMaterial color={'hotpink'} />
+                <meshStandardMaterial color={'white'} />
                 {/* <blockMaterial
                     attach='material'
                     uTexture={uTexture}

@@ -1,9 +1,13 @@
 import React from 'react'
 
-const AmbientLight = ({ intensity }) => {
+import * as THREE from 'three'
+
+const AmbientLight = ({ position, color, intensity }) => {
 
     return (
         <ambientLight
+            position={position}
+            color={color}
             intensity={intensity}
         />
     )

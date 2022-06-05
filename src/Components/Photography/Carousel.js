@@ -5,20 +5,9 @@ import { Block } from '@components/Photography/Registration/index'
 import BLOCKS_DATAS from '@json/Components/Photography/BlocksDatas'
 import { useFrame } from '@react-three/fiber'
 
-const blocksNumber = Object.keys(BLOCKS_DATAS).length
+const blocks_number = Object.keys(BLOCKS_DATAS).length
 
 const Carousel = () => {
-
-    let scrollCarouselSpeed = 0
-    let scrollCarouselPosition = 0
-    let scrollCarouselDivided = 0
-    let scrollCarouselRounded = 0
-
-    const blocksWidth = 105
-    const blocksHeight = 300
-    const stepLength = blocksWidth * -1.2
-    
-    let currentBlocksNumber = blocksNumber
 
     // GET ELEMENTs
 
@@ -32,48 +21,57 @@ const Carousel = () => {
     const block_height = 300
     const step_length = block_width * -1.2
 
+    let position_carousel = 0
+    let scroll_speed = 0
+    let scroll_divided = 0
+    let scroll_rounded = 0
+
     // REFS
 
     const carouselRef = useRef()
+
+    // STATES
+
     const [blocksRef, setBlocksRef] = useState([])
 
     // USE EFFECT
 
     useEffect(() => {
-        setBlocksRef((blocksRef) => Array(blocksNumber).fill().map((index) => blocksRef[index] || createRef()))
+        setBlocksRef((blocksRef) => Array(blocks_number).fill().map((index) => blocksRef[index] || createRef()))
     }, [])
 
-    const setCarouselPosition = (currentBlocksNumber, stepLength, scrollCarouselPosition, scrollCarouselRounded) => {
+    const setCarouselPosition = (blocks_number, step_length, position_carousel, scroll_rounded) => {
 
-        if (scrollCarouselRounded < 0.5) {
-            scrollCarouselRounded = 0
-            const scrollCarouselDiff = scrollCarouselRounded - (scrollCarouselPosition / Math.abs(stepLength))
-            return scrollCarouselPosition += Math.sign(scrollCarouselDiff) * Math.pow(Math.abs(scrollCarouselDiff), 0.7) * 0.08 * Math.abs(stepLength)
+        if (scroll_rounded < 0) {
+            scroll_rounded = 0
+            const scroll_diff = scroll_rounded - (position_carousel / Math.abs(step_length))
+            return position_carousel += Math.sign(scroll_diff) * Math.pow(Math.abs(scroll_diff), 0.7) * 0.08 * Math.abs(step_length)
     
-        } else if (scrollCarouselRounded > currentBlocksNumber - 1.5) {
-            scrollCarouselRounded = 5
-            const scrollCarouselDiff = scrollCarouselRounded - (scrollCarouselPosition / Math.abs(stepLength))
-            return scrollCarouselPosition += Math.sign(scrollCarouselDiff) * Math.pow(Math.abs(scrollCarouselDiff), 0.7) * 0.08 * Math.abs(stepLength)
+        } else if (scroll_rounded > blocks_number - 1) {
+            scroll_rounded = 5
+            const scroll_diff = scroll_rounded - (position_carousel / Math.abs(step_length))
+            return position_carousel += Math.sign(scroll_diff) * Math.pow(Math.abs(scroll_diff), 0.7) * 0.08 * Math.abs(step_length)
     
         } else {
-            const scrollCarouselDiff = scrollCarouselRounded - (scrollCarouselPosition / Math.abs(stepLength))
-            return scrollCarouselPosition += Math.sign(scrollCarouselDiff) * Math.pow(Math.abs(scrollCarouselDiff), 0.7) * 0.025 * Math.abs(stepLength)
+            const scroll_diff = scroll_rounded - (position_carousel / Math.abs(step_length))
+            return position_carousel += Math.sign(scroll_diff) * Math.pow(Math.abs(scroll_diff), 0.7) * 0.015 * Math.abs(step_length)
         }
     }
 
     window.addEventListener('wheel', (e) => {
-        scrollCarouselSpeed += e.deltaY * 0.03
-        console.log('ok')
+        scroll_speed += e.deltaY * 0.03
+        /* console.log('scroll_speed', scroll_speed) */
     })
 
     useFrame(() => {
-        scrollCarouselPosition += scrollCarouselSpeed
-        scrollCarouselSpeed *= 0.8
-        scrollCarouselDivided = scrollCarouselPosition / Math.abs(stepLength)
-        scrollCarouselRounded = Math.round(scrollCarouselDivided)
-        scrollCarouselPosition = setCarouselPosition(currentBlocksNumber, stepLength, scrollCarouselPosition, scrollCarouselRounded)
+        position_carousel += scroll_speed
+        console.log('position_carousel', position_carousel)
+        scroll_speed *= 0.8
+        scroll_divided = position_carousel / Math.abs(step_length)
+        scroll_rounded = Math.round(scroll_divided)
+        position_carousel = setCarouselPosition(blocks_number, step_length, position_carousel, scroll_rounded)
 
-        carouselRef.current.position.x = scrollCarouselPosition
+        carouselRef.current.position.x = position_carousel
     })
     
     return (

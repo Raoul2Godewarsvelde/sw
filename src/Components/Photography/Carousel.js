@@ -21,9 +21,10 @@ const Carousel = () => {
     const canvas_height = canvas.offsetHeight
     const block_width = 400
     const block_height = 300
-    const step_length = block_width * -1.2
+    const step_length = block_width * -1.5
 
     let position_carousel = 0
+    let scroll_delta = 0
     let scroll_speed = 0
     let scroll_divided = 0
     let scroll_rounded = 0
@@ -52,12 +53,12 @@ const Carousel = () => {
 
     const setCarouselPosition = (blocks_number, step_length, position_carousel, scroll_rounded) => {
 
-        if (scroll_rounded < 0) {
+        if (scroll_rounded < 0.1) {
             scroll_rounded = 0
             const scroll_diff = scroll_rounded - (position_carousel / Math.abs(step_length))
             return position_carousel += Math.sign(scroll_diff) * Math.pow(Math.abs(scroll_diff), 0.7) * 0.08 * Math.abs(step_length)
     
-        } else if (scroll_rounded > blocks_number - 1) {
+        } else if (scroll_rounded > blocks_number - 1.1) {
             scroll_rounded = 5
             const scroll_diff = scroll_rounded - (position_carousel / Math.abs(step_length))
             return position_carousel += Math.sign(scroll_diff) * Math.pow(Math.abs(scroll_diff), 0.7) * 0.08 * Math.abs(step_length)
@@ -70,18 +71,27 @@ const Carousel = () => {
 
     window.addEventListener('wheel', (e) => {
         scroll_speed += e.deltaY * 0.03
+        scroll_delta += e.deltaY
         /* console.log('scroll_speed', scroll_speed) */
     })
 
     useFrame(() => {
         position_carousel += scroll_speed
-        console.log('position_carousel', position_carousel)
-        scroll_speed *= 0.8
+        scroll_speed *= 0.9
+        scroll_delta *= 0.9
         scroll_divided = position_carousel / Math.abs(step_length)
         scroll_rounded = Math.round(scroll_divided)
         position_carousel = setCarouselPosition(blocks_number, step_length, position_carousel, scroll_rounded)
 
         carouselRef.current.position.x = position_carousel
+
+        blocksRef.forEach((block, index) => {
+            
+            // SHIFT
+
+            /* block.current.material.shift = (Math.abs(Math.sin(position_carousel * 0.00655)) * 0.5) + 1 */
+            block.current.material.shift = scroll_delta * 100
+        })
     })
     
     return (

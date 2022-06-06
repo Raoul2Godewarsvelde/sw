@@ -53,10 +53,10 @@ const RayMarchingMaterial = shaderMaterial(
 
         float sdf(vec3 p) {
             vec3 p1 = rotate(p, vec3(1.0), uTime / 5.0);
-            float box = sdBox(p1, vec3(0.2));
+            float box = sdBox(p1, vec3(0.3));
             float sphere = sdSphere(p, 0.4);
 
-            return box;
+            return min(box, sphere);
         }
 
         vec3 calcNormal( in vec3 p ) {

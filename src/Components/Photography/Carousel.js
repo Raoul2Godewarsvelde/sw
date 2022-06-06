@@ -75,6 +75,15 @@ const Carousel = () => {
         /* console.log('scroll_speed', scroll_speed) */
     })
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log('This will run every second!')
+        }, 1000)
+        
+        return () => clearInterval(interval)
+      }, [])
+    /* return <clock ref={ref} args={[true]} />   */  
+
     useFrame(() => {
         position_carousel += scroll_speed
         scroll_speed *= 0.9

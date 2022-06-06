@@ -1,30 +1,85 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import {
+  ScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend
+} from "recharts";
+import _ from "lodash";
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
-const SimpleLineChart = ({ data }) => {
+const SimpleLineChart = ({ datas }) => {
+
+    const TABLE_LIST_1 = [{ x: 0, y: 0 }]
+
+    const [list1, setlist1] = useState([...TABLE_LIST_1])
+
+    function useInterval(callback, delay) {
+        const savedCallback = useRef()
+    
+        // Remember the latest callback.
+        useEffect(() => {
+            savedCallback.current = callback
+        }, [callback])
+    
+        // Set up the interval.
+        useEffect(() => {
+            function tick() {
+                savedCallback.current()
+            }
+            if (delay !== null) {
+            let id = setInterval(tick, delay)
+            return () => clearInterval(id)
+            }
+        }, [delay])
+    }
+
+    useInterval(() => {
+        let result = _.cloneDeep(list1)
+            result.push({
+            x: Math.floor(Math.random() * 100),
+            y: Math.floor(Math.random() * 100)
+            })
+            console.log(result)
+            setlist1(result)
+    }, 1000)
 
     return (
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            width={500}
-            height={300}
-            data={data}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-          </LineChart>
+        <ResponsiveContainer width='100%' height='100%'>
+            <LineChart
+                width={500}
+                height={300}
+                data={list1}
+                margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                }}
+            >
+            <ScatterChart
+              width={600}
+              height={400}
+              margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+            >
+              <CartesianGrid />
+              <XAxis type="number" dataKey={"x"} />
+              <YAxis type="number" dataKey={"y"} />
+              <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+              <Legend />
+              <Scatter
+                name="values"
+                data={list1}
+                fill="#8884d8"
+                line
+                shape="circle"
+              />
+            </ScatterChart>
+            </LineChart>
         </ResponsiveContainer>
     )
 }

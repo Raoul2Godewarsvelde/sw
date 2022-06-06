@@ -1,59 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
+import { usePhotographyChartStore } from '@hooks/Zustand/Charts/PhotographyChartStore'
 
 import { SimpleLineChart } from '@components/Charts/Components/Registration/index'
 
 function PhotographyChart() {
 
-    const data = [
-        {
-          name: 'Page A',
-          uv: 4000,
-          pv: 2400,
-          amt: 2400,
-        },
-        {
-          name: 'Page B',
-          uv: 3000,
-          pv: 1398,
-          amt: 2210,
-        },
-        {
-          name: 'Page C',
-          uv: 2000,
-          pv: 9800,
-          amt: 2290,
-        },
-        {
-          name: 'Page D',
-          uv: 2780,
-          pv: 3908,
-          amt: 2000,
-        },
-        {
-          name: 'Page E',
-          uv: 1890,
-          pv: 4800,
-          amt: 2181,
-        },
-        {
-          name: 'Page F',
-          uv: 2390,
-          pv: 3800,
-          amt: 2500,
-        },
-        {
-          name: 'Page G',
-          uv: 3490,
-          pv: 4300,
-          amt: 2100,
-        },
-    ]
+  // HOOKS
 
-    return (
-        <SimpleLineChart
-            data={data}
-        />
-    )
+  const [
+    eDeltaY
+  ] = usePhotographyChartStore((state) => [
+    state.eDeltaY, state.setEDeltaY
+  ])
+
+  // USE STATES
+
+  const [datas, setDatas] = useState({
+    e_delta_y: 0
+  })
+
+  // USE EFFECT
+
+  useEffect(() => {
+    console.log(eDeltaY)
+    let datas_copy = datas
+    datas_copy.e_delta_y = eDeltaY
+    setDatas(datas_copy)
+  }, [eDeltaY])
+
+  return (
+    <SimpleLineChart
+      datas={datas}
+    />
+  )
 }
 
 export default PhotographyChart

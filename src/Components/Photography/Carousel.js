@@ -3,6 +3,8 @@ import React, { createRef, useRef, useState, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { useFrame, useLoader } from '@react-three/fiber'
 
+import { usePhotographyChartStore } from '@hooks/Zustand/Charts/PhotographyChartStore'
+
 import { Block } from '@components/Photography/Registration/index'
 
 import BLOCKS_DATAS from '@json/Components/Photography/BlocksDatas'
@@ -10,6 +12,14 @@ import BLOCKS_DATAS from '@json/Components/Photography/BlocksDatas'
 const blocks_number = Object.keys(BLOCKS_DATAS).length
 
 const Carousel = () => {
+
+    // HOOKS
+  
+    const [
+      setEDeltaY
+    ] = usePhotographyChartStore((state) => [
+      state.setEDeltaY
+    ])
 
     // GET ELEMENTs
 
@@ -72,6 +82,7 @@ const Carousel = () => {
     window.addEventListener('wheel', (e) => {
         scroll_speed += e.deltaY * 0.05
         scroll_delta += e.deltaY
+        setEDeltaY(e.deltaY)
         /* console.log('scroll_speed', scroll_speed) */
     })
 

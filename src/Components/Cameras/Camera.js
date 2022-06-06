@@ -1,9 +1,9 @@
 import React, { useEffect, forwardRef } from 'react'
 
 import { useThree } from '@react-three/fiber'
-import { PerspectiveCamera, OrbitControls } from '@react-three/drei'
+import { PerspectiveCamera/* , OrbitControls */ } from '@react-three/drei'
 
-const Camera = forwardRef((props, ref) => {
+const Camera = forwardRef(({ canvasId, cameraPositionZ, ...props }, ref) => {
 
     // USE THREE
 
@@ -15,7 +15,7 @@ const Camera = forwardRef((props, ref) => {
       void set({ camera: ref.current })
     })
 
-    const canvas = document.getElementById('scene__canvas')
+    const canvas = document.getElementById(canvasId)
     let canvasWidth = canvas.offsetWidth
     let canvasHeight = canvas.offsetHeight
 
@@ -23,7 +23,7 @@ const Camera = forwardRef((props, ref) => {
         canvasWidth = canvas.offsetWidth
         canvasHeight = canvas.offsetHeight
         ref.current.aspect = canvasWidth / canvasHeight
-        ref.current.fov = 2 * Math.atan((canvasHeight / 2) / props.cameraPositionZ) * (180 / Math.PI)
+        ref.current.fov = 2 * Math.atan((canvasHeight / 2) / cameraPositionZ) * (180 / Math.PI)
     })
 
     return (
@@ -32,7 +32,7 @@ const Camera = forwardRef((props, ref) => {
                 ref={ref}
                 {...props}
                 aspect={canvasWidth / canvasHeight}
-                fov={2 * Math.atan((canvasHeight / 2) / props.cameraPositionZ) * (180 / Math.PI)}
+                fov={2 * Math.atan((canvasHeight / 2) / cameraPositionZ) * (180 / Math.PI)}
                 onUpdate={self => self.updateProjectionMatrix()}
             />
             {/* <OrbitControls /> */}

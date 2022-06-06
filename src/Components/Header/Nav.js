@@ -15,9 +15,14 @@ const Nav = () => {
                 </li>
                 <li>
                     <Link
-                        onClick={() => console.log('callback after route change')}
                         to='/photography'>
                             Photography
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to='/ray_marching'>
+                            Ray marching
                     </Link>
                 </li>
             </ul>

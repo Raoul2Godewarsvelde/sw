@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber'
 
 import { Camera } from '@components/Cameras/Registration/index'
 
-import { Carousel, Lights } from '@components/Photography/Registration/index'
+import { Lights } from '@components/RayMarching/Registration/index'
 
 const Scene = () => {
     
@@ -13,17 +13,17 @@ const Scene = () => {
     const camera = createRef()
     
     return (
-        <Canvas id={'photography__canvas'} width={window.innerWidth} height={window.innerHeight}>
+        <Canvas id={'rayMarching__canvas'} width={window.innerWidth} height={window.innerHeight}>
             <Camera 
                 ref={camera}
-                canvasId={'photography__canvas'}
+                canvasId={'rayMarching__canvas'}
                 makeDefault
                 position={[0, 0, camera_position_z]}
                 cameraPositionZ={camera_position_z}
             />
             <Lights />
             <Suspense fallback={null}>
-                <Carousel />
+
             </Suspense>
         </Canvas>
     )

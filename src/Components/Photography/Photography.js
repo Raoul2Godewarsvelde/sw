@@ -10,7 +10,7 @@ const Photography = () => {
     
     return (
         <div
-          id='scene__wrapper'
+          id='photography__wrapper'
           style={{
             display: 'flex',
             displayDirection: 'row',

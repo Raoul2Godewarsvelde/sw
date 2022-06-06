@@ -1,14 +1,22 @@
 import React, { useRef } from 'react'
 
 import * as THREE from 'three'
+import { useFrame } from '@react-three/fiber'
 
 import '@components/Materials/RayMarchingMaterial'
 
 const Plane = ({ position, rotation, scale, size, segments, material }) => {
 
+    let time = 0.0
+
     // REF
 
     const planeRef = useRef()
+    const materialRef = useRef()
+
+    // USE FRAME
+
+    useFrame((state, delta) => (materialRef.current.uTime += 0.1))
 
     return (
         <mesh
@@ -39,6 +47,7 @@ const Plane = ({ position, rotation, scale, size, segments, material }) => {
 
             {material.type === 'shader' && (
                 <rayMarchingMaterial
+                    ref={materialRef}
                     wireframe={material.wireframe}
                     side={material.double_sided ? THREE.DoubleSide : null}
                     uOpacity={material.opacity}

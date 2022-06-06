@@ -1,5 +1,6 @@
 import React, { createRef, Suspense } from 'react'
 
+import * as THREE from 'three'
 import { Canvas } from '@react-three/fiber'
 
 import { PerspectiveCamera } from '@components/Cameras/Registration/index'
@@ -30,9 +31,14 @@ const Scene = () => {
                     scale={{x: 1, y: 1, z: 1}}
                     size={{x: 1, y: 1}}
                     segments={{x: 10, y: 10}}
-                    wireframe={false}
-                    color={'#ff0000'}
-                    opacity={1}
+                    material={{
+                        type: 'shader',
+                        wireframe: false,
+                        double_sided: true,
+                        color: new THREE.Color(0x000ff0),
+                        opacity: 1.0,
+                        uCanvasSize: {x: 1000, y: 1000}
+                    }}
                 />
             </Suspense>
         </Canvas>

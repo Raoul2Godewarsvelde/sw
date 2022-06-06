@@ -19,7 +19,7 @@ const Scene = () => {
                 ref={cameraRef}
                 canvasId={'rayMarching__canvas'}
                 makeDefault
-                position={[5, 5, 5]}
+                position={[0, 0, 2]}
                 cameraPositionZ={camera_position_z}
                 orbitControl={true}
             />
@@ -37,7 +37,7 @@ const Scene = () => {
                         double_sided: true,
                         color: new THREE.Color(0x000ff0),
                         opacity: 1.0,
-                        uCanvasSize: {x: 1000, y: 1000}
+                        uCanvasSize: {x: 2, y: 2}
                     }}
                 />
             </Suspense>

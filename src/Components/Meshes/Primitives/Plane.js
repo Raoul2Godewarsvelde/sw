@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 
 import * as THREE from 'three'
 
-import '@components/Materials/ShaderMaterial'
+import '@components/Materials/RayMarchingMaterial'
 
 const Plane = ({ position, rotation, scale, size, segments, material }) => {
 
@@ -38,7 +38,7 @@ const Plane = ({ position, rotation, scale, size, segments, material }) => {
             {/* SHADER */}
 
             {material.type === 'shader' && (
-                <shaderMaterial
+                <rayMarchingMaterial
                     wireframe={material.wireframe}
                     side={material.double_sided ? THREE.DoubleSide : null}
                     uOpacity={material.opacity}

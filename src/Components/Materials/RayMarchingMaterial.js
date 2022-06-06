@@ -26,12 +26,18 @@ const RayMarchingMaterial = shaderMaterial(
             return sdsSphere(p, 0.4);
         }
 
+        vec3 calcNormal( in vec3 p ) {
+            const float eps = 0.0001;
+            const vec2 h = vec2(eps,0);
+            return normalize( vec3(sdf(p + h.xyy) - sdf(p - h.xyy), sdf(p + h.yxy) - sdf(p - h.yxy), sdf(p + h.yyx) - sdf(p - h.yyx)));
+        }
+
         uniform vec2 uCanvasSize;
         varying vec2 vUv;
         void main() {
             vec2 newUV = (vUv - vec2(0.5)) * uCanvasSize.xy * vec2(0.5);
             vec3 camPos = vec3(0.0, 0.0, 2.0);
-            vec3 ray = normalize(vec3(vUv, -1.0));
+            vec3 ray = normalize(vec3((vUv - vec2(0.5)) * uCanvasSize.xy, -1.0));
 
             vec3 rayPos = camPos;
             float t = 0.0;
@@ -45,7 +51,10 @@ const RayMarchingMaterial = shaderMaterial(
 
             vec3 color = vec3(0.0);
             if (t < tMax) {
+                vec3 pos = camPos + t * ray;
                 color = vec3(1.0);
+                vec3 normal = calcNormal(pos);
+                color = normal;
             }
 
             gl_FragColor = vec4(color, 1.0);

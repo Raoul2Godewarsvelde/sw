@@ -8,7 +8,7 @@ import { Carousel, Lights } from '@components/Photography/Registration/index'
 
 const Scene = () => {
     
-    const camera_position_z = 2.5
+    const camera_position_z = 2
 
     const camera = createRef()
     

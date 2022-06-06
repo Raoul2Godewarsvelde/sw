@@ -21,7 +21,7 @@ const Carousel = () => {
     const canvas_height = canvas.offsetHeight
     const block_width = 400
     const block_height = 300
-    const step_length = block_width * -1.5
+    const step_length = block_width * 1.5
 
     let position_carousel = 0
     let scroll_delta = 0
@@ -70,7 +70,7 @@ const Carousel = () => {
     }
 
     window.addEventListener('wheel', (e) => {
-        scroll_speed += e.deltaY * 0.03
+        scroll_speed += e.deltaY * 0.05
         scroll_delta += e.deltaY
         /* console.log('scroll_speed', scroll_speed) */
     })
@@ -83,14 +83,16 @@ const Carousel = () => {
         scroll_rounded = Math.round(scroll_divided)
         position_carousel = setCarouselPosition(blocks_number, step_length, position_carousel, scroll_rounded)
 
-        carouselRef.current.position.x = position_carousel
+        carouselRef.current.position.x = -position_carousel
 
         blocksRef.forEach((block, index) => {
             
             // SHIFT
 
             /* block.current.material.shift = (Math.abs(Math.sin(position_carousel * 0.00655)) * 0.5) + 1 */
-            block.current.material.shift = scroll_delta * 100
+            block.current.material.uOffset = scroll_delta * 100
+            block.current.material.shift = scroll_delta * 0.00035
+            block.current.material.uScale = scroll_delta * 0.0001
         })
     })
     

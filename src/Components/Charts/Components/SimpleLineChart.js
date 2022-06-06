@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
+    ResponsiveContainer,
+    LineChart,
   ScatterChart,
   Scatter,
   XAxis,
@@ -9,8 +11,6 @@ import {
   Legend
 } from "recharts";
 import _ from "lodash";
-
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 const SimpleLineChart = ({ datas }) => {
 
@@ -49,39 +49,27 @@ const SimpleLineChart = ({ datas }) => {
     }, 1000)
 
     return (
-        <ResponsiveContainer width='100%' height='100%'>
-            <LineChart
-                width={500}
-                height={300}
-                data={list1}
-                margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                }}
-            >
-            <ScatterChart
-              width={600}
-              height={400}
-              margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-            >
-              <CartesianGrid />
-              <XAxis type="number" dataKey={"x"} />
-              <YAxis type="number" dataKey={"y"} />
-              <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-              <Legend />
-              <Scatter
-                name="values"
-                data={list1}
-                fill="#8884d8"
-                line
-                shape="circle"
-              />
-            </ScatterChart>
-            </LineChart>
-        </ResponsiveContainer>
-    )
+        <div>
+          <ScatterChart
+            width={600}
+            height={400}
+            margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+          >
+            <CartesianGrid />
+            <XAxis type="number" dataKey={"x"} />
+            <YAxis type="number" dataKey={"y"} />
+            <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+            <Legend />
+            <Scatter
+              name="values"
+              data={list1}
+              fill="#8884d8"
+              line
+              shape="circle"
+            />
+          </ScatterChart>
+        </div>
+      );
 }
 
 export default SimpleLineChart

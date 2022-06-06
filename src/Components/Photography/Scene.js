@@ -8,7 +8,7 @@ import { Carousel, Lights } from '@components/Photography/Registration/index'
 
 const Scene = () => {
     
-    const camera_position_z = 2
+    const camera_position_z = 20
 
     const camera = createRef()
     
@@ -20,6 +20,7 @@ const Scene = () => {
                 makeDefault
                 position={[0, 0, camera_position_z]}
                 cameraPositionZ={camera_position_z}
+                orbitControl={false}
             />
             <Lights />
             <Suspense fallback={null}>

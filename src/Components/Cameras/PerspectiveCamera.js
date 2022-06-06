@@ -1,9 +1,9 @@
 import React, { useEffect, forwardRef } from 'react'
 
 import { useThree } from '@react-three/fiber'
-import { PerspectiveCamera } from '@react-three/drei'
+import { PerspectiveCamera, OrbitControls } from '@react-three/drei'
 
-const Camera = forwardRef(({ canvasId, cameraPositionZ, ...props }, ref) => {
+const Camera = forwardRef(({ canvasId, cameraPositionZ, orbitControl, ...props }, ref) => {
 
     // USE THREE
 
@@ -31,10 +31,8 @@ const Camera = forwardRef(({ canvasId, cameraPositionZ, ...props }, ref) => {
             <PerspectiveCamera
                 ref={ref}
                 {...props}
-                aspect={canvasWidth / canvasHeight}
-                fov={2 * Math.atan((canvasHeight / 2) / cameraPositionZ) * (180 / Math.PI)}
-                onUpdate={self => self.updateProjectionMatrix()}
             />
+            <OrbitControls />
         </>
     )
 })

@@ -8,7 +8,8 @@ const RayMarchingMaterial = shaderMaterial(
     {
         uTime: 0.0,
         uResolution: {x: 0.0, y: 0.0, z: 10000.0, w: 10000.0},
-        uCanvasSize: {x: 0, y: 0}
+        uCanvasSize: {x: 0, y: 0},
+        uTexture: new THREE.Texture()
     },
     glsl`
         varying vec2 vUv;
@@ -21,6 +22,7 @@ const RayMarchingMaterial = shaderMaterial(
     glsl`
         uniform vec2 uCanvasSize;
         uniform float uTime;
+        uniform sampler2D uTexture;
         varying vec2 vUv;
 
         float sdSphere( vec3 p, float radius ) {
@@ -51,12 +53,23 @@ const RayMarchingMaterial = shaderMaterial(
             return (m * vec4(v, 1.0)).xyz;
         }
 
+        float smin( float a, float b, float k ) {
+            float h = a - b;
+            return 0.5 * ((a + b) - sqrt(h * h + k) );
+        }
+
+        vec2 getmatcap(vec3 eye, vec3 normal) {
+            vec3 reflected = reflect(eye, normal);
+            float m = 2.8284271247461903 * sqrt(reflected.z + 1.0);
+            return reflected.xy / m + 0.5;
+        }
+
         float sdf(vec3 p) {
             vec3 p1 = rotate(p, vec3(1.0), uTime / 5.0);
             float box = sdBox(p1, vec3(0.3));
             float sphere = sdSphere(p, 0.4);
 
-            return min(box, sphere);
+            return smin(box, sphere, 0.1);
         }
 
         vec3 calcNormal( in vec3 p ) {
@@ -88,7 +101,9 @@ const RayMarchingMaterial = shaderMaterial(
                 vec3 normal = calcNormal(pos);
                 color = normal;
                 float diff = dot(vec3(1.0), normal);
+                /* vec2 matcapUV = getmatcap(ray, normal); */
                 color = vec3(diff);
+                /* color = texture2D(uTexture, matcapUV).rgb; */
             }
 
             gl_FragColor = vec4(color, 1.0);

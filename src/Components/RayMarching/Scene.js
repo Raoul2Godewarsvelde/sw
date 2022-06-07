@@ -1,17 +1,23 @@
 import React, { createRef, Suspense } from 'react'
 
 import * as THREE from 'three'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useLoader } from '@react-three/fiber'
 
 import { PerspectiveCamera } from '@components/Cameras/Registration/index'
 import { Lights } from '@components/RayMarching/Registration/index'
 import { Plane } from '@components/Meshes/Primitives/Registration/index'
+
+import matcap from '@assets/Materials/Matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.jpeg'
 
 const Scene = () => {
     
     const camera_position_z = 2
 
     const cameraRef = createRef()
+
+    window.addEventListener('mousemove', (e) => {
+        console.log('ok')
+    })
     
     return (
         <Canvas id={'rayMarching__canvas'} width={window.innerWidth} height={window.innerHeight}>
@@ -37,7 +43,8 @@ const Scene = () => {
                         double_sided: true,
                         color: new THREE.Color(0x000ff0),
                         opacity: 1.0,
-                        uCanvasSize: {x: 2, y: 2}
+                        uCanvasSize: {x: 2, y: 2},
+                        matcap: new THREE.TextureLoader().load(matcap)
                     }}
                 />
             </Suspense>

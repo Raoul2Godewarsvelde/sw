@@ -30,7 +30,6 @@ const Scene = () => {
                 x: e.pageX / window_inner_width - 0.5,
                 y: e.pageY / -window_inner_height + 0.5
             }
-            console.log(planeRef.current.uMouse)
         })
     })
 

@@ -11,6 +11,9 @@ import matcap from '@assets/Materials/Matcaps/7A7A7A_D9D9D9_BCBCBC_B4B4B4.jpeg'
 
 const Scene = () => {
     
+    let window_inner_width = window.innerWidth
+    let window_inner_height = window.innerHeight
+
     const camera_position_z = 2
 
     const cameraRef = createRef()
@@ -23,9 +26,11 @@ const Scene = () => {
 
     useEffect(() => {
         window.addEventListener('mousemove', (e) => {
-            planeRef.current.uMouse.x = e.pageX
-            planeRef.current.uMouse.y = e.pageY
-            console.log({x: e.pageX, y: e.pageY})
+            planeRef.current.uMouse = {
+                x: e.pageX / window_inner_width - 0.5,
+                y: e.pageY / window_inner_height - 0.5
+            }
+            console.log(planeRef.current.uMouse)
         })
     })
 

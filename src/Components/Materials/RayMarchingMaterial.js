@@ -106,7 +106,7 @@ const RayMarchingMaterial = shaderMaterial(
                 /* vec2 matcapUV = getmatcap(ray, normal); */
                 color = vec3(diff);
                 /* color = texture2D(uTexture, matcapUV).rgb; */
-                color = vec3(uMouse.x / 256.0, uMouse.y / 256.0, 0.0);
+                color = vec3(uMouse.x, uMouse.y, 0.0);
             }
 
             gl_FragColor = vec4(color, 1.0);

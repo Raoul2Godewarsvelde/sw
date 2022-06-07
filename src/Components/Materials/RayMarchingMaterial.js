@@ -9,7 +9,8 @@ const RayMarchingMaterial = shaderMaterial(
         uTime: 0.0,
         uResolution: {x: 0.0, y: 0.0, z: 10000.0, w: 10000.0},
         uCanvasSize: {x: 0, y: 0},
-        uTexture: new THREE.Texture()
+        uTexture: new THREE.Texture(),
+        uMouse: new THREE.Vector2(1.0, 1.0)
     },
     glsl`
         varying vec2 vUv;
@@ -24,6 +25,7 @@ const RayMarchingMaterial = shaderMaterial(
         uniform float uTime;
         uniform sampler2D uTexture;
         varying vec2 vUv;
+        uniform vec2 uMouse;
 
         float sdSphere( vec3 p, float radius ) {
             return length(p) - radius;
@@ -104,6 +106,7 @@ const RayMarchingMaterial = shaderMaterial(
                 /* vec2 matcapUV = getmatcap(ray, normal); */
                 color = vec3(diff);
                 /* color = texture2D(uTexture, matcapUV).rgb; */
+                color = vec3(uMouse.x / 256.0, uMouse.y / 256.0, 0.0);
             }
 
             gl_FragColor = vec4(color, 1.0);

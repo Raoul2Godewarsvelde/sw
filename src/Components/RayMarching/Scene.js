@@ -1,7 +1,7 @@
-import React, { createRef, Suspense } from 'react'
+import React, { useEffect, createRef, useRef, Suspense } from 'react'
 
 import * as THREE from 'three'
-import { Canvas, useLoader } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 
 import { PerspectiveCamera } from '@components/Cameras/Registration/index'
 import { Lights } from '@components/RayMarching/Registration/index'
@@ -14,11 +14,21 @@ const Scene = () => {
     const camera_position_z = 2
 
     const cameraRef = createRef()
-
-    window.addEventListener('mousemove', (e) => {
-        console.log('ok')
+    const planeRef = useRef({
+        uMouse: {
+            x: 0.0,
+            y: 0.0
+        }
     })
-    
+
+    useEffect(() => {
+        window.addEventListener('mousemove', (e) => {
+            planeRef.current.uMouse.x = e.pageX
+            planeRef.current.uMouse.y = e.pageY
+            console.log({x: e.pageX, y: e.pageY})
+        })
+    })
+
     return (
         <Canvas id={'rayMarching__canvas'} width={window.innerWidth} height={window.innerHeight}>
             <PerspectiveCamera 
@@ -32,6 +42,7 @@ const Scene = () => {
             <Lights />
             <Suspense fallback={null}>
                 <Plane
+                    ref={planeRef}
                     position={{x: 0, y: 0, z: 0}}
                     rotation={{x: 0, y: 0, z: 0}}
                     scale={{x: 1, y: 1, z: 1}}

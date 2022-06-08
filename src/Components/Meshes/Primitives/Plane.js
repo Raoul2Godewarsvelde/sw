@@ -21,6 +21,18 @@ const Plane = forwardRef(({ position, rotation, scale, size, segments, material,
             position={[position.x, position.y, position.z]}
             rotation={[rotation.x, rotation.y, rotation.z]}
             scale={[scale.x, scale.y, scale.z]}
+            onContextMenu={(e) => console.log('context menu')}
+            onDoubleClick={(e) => console.log('double click')}
+            onWheel={(e) => console.log('wheel spins')}
+            onPointerUp={(e) => console.log('up')}
+            onPointerDown={(e) => console.log('down')}
+            onPointerOver={(e) => console.log('over')}
+            onPointerOut={(e) => console.log('out')}
+            onPointerEnter={(e) => console.log('enter')}
+            onPointerLeave={(e) => console.log('leave')}
+            onPointerMove={(e) => console.log('move')}
+            onPointerMissed={() => console.log('missed')}
+            onUpdate={(self) => console.log('props have been updated')}
         >
             <planeBufferGeometry
                 attach='geometry'

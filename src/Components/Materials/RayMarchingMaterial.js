@@ -10,7 +10,8 @@ const RayMarchingMaterial = shaderMaterial(
         uResolution: {x: 0.0, y: 0.0, z: 10000.0, w: 10000.0},
         uCanvasSize: {x: 0, y: 0},
         uTexture: new THREE.Texture(),
-        uMouse: new THREE.Vector2(1.0, 1.0)
+        uMouse: new THREE.Vector2(1.0, 1.0),
+        uProgress: 0.0,
     },
     glsl`
         varying vec2 vUv;
@@ -26,6 +27,7 @@ const RayMarchingMaterial = shaderMaterial(
         uniform sampler2D uTexture;
         varying vec2 vUv;
         uniform vec2 uMouse;
+        uniform float uProgress;
 
         float sdSphere( vec3 p, float radius ) {
             return length(p) - radius;
@@ -66,12 +68,24 @@ const RayMarchingMaterial = shaderMaterial(
             return reflected.xy / m + 0.5;
         }
 
+        float rand(vec2 co) {
+            return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+        }
+
         float sdf(vec3 p) {
             vec3 p1 = rotate(p, vec3(1.0), uTime / 5.0);
-            float box = sdBox(p1, vec3(0.3));
-            
-            float sphere = sdSphere(p - vec3(uMouse * uCanvasSize.xy * 2.0, 0.0), 0.2);
-            return smin(box, sphere, 0.1);
+            float box = smin(sdBox(p1, vec3(0.2)), sdSphere(p, 0.3), 0.3);
+
+            float realSphere = sdSphere(p1, 0.3);
+            float final = mix(box, realSphere, uProgress);
+            float progr = fract(uTime / 3.0);
+
+            float goToCenter = sdSphere(p - vec3(1.0) * progr, 0.1);
+
+            final = smin(final, goToCenter, 0.3);
+
+            float mouseSphere = sdSphere(p - vec3(uMouse * uCanvasSize.xy * 2.0, 0.0), 0.2);
+            return smin(final, mouseSphere, 0.4);
         }
 
         vec3 calcNormal( in vec3 p ) {
@@ -82,6 +96,8 @@ const RayMarchingMaterial = shaderMaterial(
         }
 
         void main() {
+            float dist = length(vUv - vec2(0.5));
+            vec3 bg = mix(vec3(0.3), vec3(0.0), dist);
             vec2 newUV = (vUv - vec2(0.5)) * uCanvasSize.xy * vec2(0.5);
             vec3 camPos = vec3(0.0, 0.0, 2.0);
             vec3 ray = normalize(vec3((vUv - vec2(0.5)) * uCanvasSize.xy, -1.0));
@@ -96,7 +112,7 @@ const RayMarchingMaterial = shaderMaterial(
                 t += h;
             }
 
-            vec3 color = vec3(0.0);
+            vec3 color = bg;
             if (t < tMax) {
                 vec3 pos = camPos + t * ray;
                 color = vec3(1.0);
@@ -107,9 +123,16 @@ const RayMarchingMaterial = shaderMaterial(
                 color = vec3(diff);
                 /* color = texture2D(uTexture, matcapUV).rgb; */
                 /* color = vec3(uMouse.x, uMouse.y, 0.0); */
+
+                float fresnel = pow(1.0 + dot(ray, normal), 3.0);
+                /* color = vec3(fresnel); */
+
+                color = mix(color, bg, fresnel);
             }
 
             gl_FragColor = vec4(color, 1.0);
+            /* gl_FragColor = vec4(bg, 1.0); */
+            /* gl_FragColor = vec4(fresnel); */
         }
     `
 )

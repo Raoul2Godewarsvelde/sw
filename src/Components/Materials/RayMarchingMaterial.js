@@ -12,6 +12,7 @@ const RayMarchingMaterial = shaderMaterial(
         uTexture: new THREE.Texture(),
         uMouse: new THREE.Vector2(1.0, 1.0),
         uProgress: 0.0,
+        PI: 0.0
     },
     glsl`
         varying vec2 vUv;
@@ -28,6 +29,7 @@ const RayMarchingMaterial = shaderMaterial(
         varying vec2 vUv;
         uniform vec2 uMouse;
         uniform float uProgress;
+        uniform float PI;
 
         float sdSphere( vec3 p, float radius ) {
             return length(p) - radius;
@@ -68,21 +70,24 @@ const RayMarchingMaterial = shaderMaterial(
             return reflected.xy / m + 0.5;
         }
 
-        float rand(vec2 co) {
-            return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+        float rand(vec2 n) { 
+            return fract(sin(dot(n, vec2(12.9898, 78.1414))) * 43758.5453);
         }
 
         float sdf(vec3 p) {
             vec3 p1 = rotate(p, vec3(1.0), uTime / 5.0);
-            float box = smin(sdBox(p1, vec3(0.2)), sdSphere(p, 0.3), 0.3);
+            float box = smin(sdBox(p1, vec3(0.2)), sdSphere(p, 0.2), 0.3);
 
             float realSphere = sdSphere(p1, 0.3);
             float final = mix(box, realSphere, uProgress);
-            float progr = fract(uTime / 3.0);
 
-            float goToCenter = sdSphere(p - vec3(1.0) * progr, 0.1);
-
-            final = smin(final, goToCenter, 0.3);
+            for(float i = 0.0; i < 10.0; i++) {
+                float randOffset = rand(vec2(i, 0.0));
+                float progr = 1.0 - fract(uTime / 3.0 + randOffset * 3.0);
+                vec3 pos = vec3(sin(randOffset * 2.0 * PI), cos(randOffset * 2.0 * PI), 0.0);
+                float goToCenter = sdSphere(p - pos * progr, 0.1);
+                final = smin(final, goToCenter, 0.3);
+            }
 
             float mouseSphere = sdSphere(p - vec3(uMouse * uCanvasSize.xy * 2.0, 0.0), 0.2);
             return smin(final, mouseSphere, 0.4);

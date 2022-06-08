@@ -46,7 +46,7 @@ const RayMarchingPlane = () => {
             position={{x: 0, y: 0, z: 0}}
             rotation={{x: 0, y: 0, z: 0}}
             scale={{x: 1, y: 1, z: 1}}
-            size={{x: 1, y: 1}}
+            size={{x: 2, y: 2}}
             segments={{x: 10, y: 10}}
             material={{
                 type: 'shader',
@@ -55,7 +55,8 @@ const RayMarchingPlane = () => {
                 color: new THREE.Color(0x000ff0),
                 opacity: 1.0,
                 uCanvasSize: {x: 2, y: 2},
-                matcap: new THREE.TextureLoader().load(matcap)
+                matcap: new THREE.TextureLoader().load(matcap),
+                PI: Math.PI
             }}
         />
     )

@@ -4,9 +4,9 @@ import { Canvas } from '@react-three/fiber'
 
 import { PerspectiveCamera } from '@components/Cameras/Registration/index'
 import {
-    Lights,
-    RayMarchingPlane
-} from '@components/RayMarching/Registration/index'
+    ContentScene,
+    Lights
+} from '@components/GrowingSunflowers/Registration/index'
 
 const Scene = () => {
 
@@ -15,10 +15,10 @@ const Scene = () => {
     const cameraRef = createRef()
 
     return (
-        <Canvas id={'rayMarching__canvas'} width={window.innerWidth} height={window.innerHeight}>
+        <Canvas id={'growingSunflowers__canvas'} width={window.innerWidth} height={window.innerHeight}>
             <PerspectiveCamera 
                 ref={cameraRef}
-                canvasId={'rayMarching__canvas'}
+                canvasId={'growingSunflowers__canvas'}
                 makeDefault
                 position={[0, 0, 2]}
                 cameraPositionZ={camera_position_z}
@@ -26,7 +26,7 @@ const Scene = () => {
             />
             <Lights />
             <Suspense fallback={null}>
-                <RayMarchingPlane />
+                <ContentScene />
             </Suspense>
         </Canvas>
     )

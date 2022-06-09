@@ -17,7 +17,6 @@ const Scene = () => {
             id={'photography__canvas'}
             width={window.innerWidth}
             height={window.innerHeight}
-            colorManagement
         >
             <Camera 
                 ref={camera}

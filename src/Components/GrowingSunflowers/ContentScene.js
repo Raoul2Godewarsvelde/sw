@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
-/* import { Sampler } from '@react-three/drei' */
+import { Sampler } from '@react-three/drei'
 
 import LotusNenupharDRACO from '@assets/Blender/LotusNenupharDRACO.js'
 import PlaneTestDRACO from '@assets/Blender/PlaneTestDRACO.js'
@@ -36,7 +36,7 @@ const ContentScene = () => {
 
     return (
         <>
-            {/* <Sampler
+            <Sampler
                 transform={({ position, normal, dummy: object }) => {
                     object.scale.setScalar(Math.random() * 0.0075)
                     object.position.copy(position)
@@ -49,8 +49,8 @@ const ContentScene = () => {
                 }}
                 mesh={geomRef}
                 instances={flowerRef}
-                weight="density"
-            /> */}
+                weight='density'
+            />
             <LotusNenupharDRACO ref={flowerRef} />
             <PlaneTestDRACO />
         </>

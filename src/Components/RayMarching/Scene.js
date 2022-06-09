@@ -19,7 +19,6 @@ const Scene = () => {
             id={'rayMarching__canvas'}
             width={window.innerWidth}
             height={window.innerHeight}
-            colorManagement
         >
             <PerspectiveCamera 
                 ref={cameraRef}

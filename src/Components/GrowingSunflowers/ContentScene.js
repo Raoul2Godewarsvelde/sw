@@ -12,11 +12,17 @@ const ContentScene = () => {
     const raycaster = new THREE.Raycaster()
 
 
-    useFrame(({ camera }) => {
+    useFrame(({ scene, camera }) => {
         window.addEventListener('pointermove', (e) => {
             pointer.x = (e.clientX / window.innerWidth) * 2 - 1
-            pointer.y =  - (e.clientY / window.innerHeight) * 2 + 1 
+            pointer.y =  - (e.clientY / window.innerHeight) * 2 + 1
+
             raycaster.setFromCamera(pointer, camera)
+            /* console.log('raycaster', raycaster) */
+            
+            /* console.log('scene', scene) */
+            const intersects = raycaster.intersectObjects(scene.children[4].children)
+            console.log('intersects', intersects)
         })
     })
 

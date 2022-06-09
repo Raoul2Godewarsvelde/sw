@@ -1,5 +1,4 @@
 const aliases = (prefix = `src`) => ({
-	'@public': `${prefix}/public`,
 	'@root': `${prefix}/src`,
 
 	'@assets': `${prefix}/src/Assets`,

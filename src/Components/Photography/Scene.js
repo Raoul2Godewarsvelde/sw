@@ -13,7 +13,12 @@ const Scene = () => {
     const camera = createRef()
     
     return (
-        <Canvas id={'photography__canvas'} width={window.innerWidth} height={window.innerHeight}>
+        <Canvas
+            id={'photography__canvas'}
+            width={window.innerWidth}
+            height={window.innerHeight}
+            colorManagement
+        >
             <Camera 
                 ref={camera}
                 canvasId={'photography__canvas'}

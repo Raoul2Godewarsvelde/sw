@@ -10,17 +10,22 @@ import {
 
 const Scene = () => {
 
-    const camera_position_z = 2
+    const camera_position_z = 10
 
     const cameraRef = createRef()
 
     return (
-        <Canvas id={'growingSunflowers__canvas'} width={window.innerWidth} height={window.innerHeight}>
+        <Canvas
+            id={'growingSunflowers__canvas'}
+            width={window.innerWidth}
+            height={window.innerHeight}
+            colorManagement
+        >
             <PerspectiveCamera 
                 ref={cameraRef}
                 canvasId={'growingSunflowers__canvas'}
                 makeDefault
-                position={[0, 0, 2]}
+                position={[10, 10, 10]}
                 cameraPositionZ={camera_position_z}
                 orbitControl={true}
             />

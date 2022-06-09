@@ -15,7 +15,12 @@ const Scene = () => {
     const cameraRef = createRef()
 
     return (
-        <Canvas id={'rayMarching__canvas'} width={window.innerWidth} height={window.innerHeight}>
+        <Canvas
+            id={'rayMarching__canvas'}
+            width={window.innerWidth}
+            height={window.innerHeight}
+            colorManagement
+        >
             <PerspectiveCamera 
                 ref={cameraRef}
                 canvasId={'rayMarching__canvas'}

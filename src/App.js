@@ -5,6 +5,7 @@ import { Header } from '@components/Header/Registration/index'
 import Home from '@pages/Home/index'
 import Photography from '@pages/Photography/index'
 import RayMarching from '@pages/RayMarching/index'
+import GrowingSunflowers from '@pages/GrowingSunflowers/index'
 
 import './App.scss'
 
@@ -17,6 +18,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/photography' element={<Photography />} />
           <Route path='/ray_marching' element={<RayMarching />} />
+          <Route path='/growing_sunflowers' element={<GrowingSunflowers />} />
         </Routes>
       </Router>
     </>

@@ -25,6 +25,12 @@ const Nav = () => {
                             Ray marching
                     </Link>
                 </li>
+                <li>
+                    <Link
+                        to='/growing_sunflowers'>
+                            Growing sunflowers
+                    </Link>
+                </li>
             </ul>
         </nav>
     )

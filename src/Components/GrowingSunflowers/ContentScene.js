@@ -1,5 +1,6 @@
 import React from 'react'
 
+import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 
 import LotusNenupharDRACO from '@assets/Blender/LotusNenupharDRACO.js'
@@ -7,13 +8,15 @@ import PlaneTestDRACO from '@assets/Blender/PlaneTestDRACO.js'
 
 const ContentScene = () => {
 
-    useFrame((state, delta) => {
+    const pointer = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster()
+
+
+    useFrame(({ camera }) => {
         window.addEventListener('pointermove', (e) => {
-            const pointer = {
-                x: (e.clientX / window.innerWidth) * 2 - 1,
-                y: - (e.clientY / window.innerHeight) * 2 + 1 
-            }
-            console.log('pointer', pointer)
+            pointer.x = (e.clientX / window.innerWidth) * 2 - 1
+            pointer.y =  - (e.clientY / window.innerHeight) * 2 + 1 
+            raycaster.setFromCamera(pointer, camera)
         })
     })
 

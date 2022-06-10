@@ -7,11 +7,12 @@ import { Sampler } from '@react-three/drei'
 import LotusNenupharDRACO from '@assets/Blender/LotusNenupharDRACO.js'
 import PlaneTestDRACO from '@assets/Blender/PlaneTestDRACO.js'
 
-const ContentScene = () => {
+const ContentScene = ({ children }) => {
 
     const pointer = new THREE.Vector2()
     const raycaster = new THREE.Raycaster()
 
+    const meshRef = useRef(null)
     const geomRef = useRef()
     const flowerRef = useRef()
 
@@ -36,23 +37,23 @@ const ContentScene = () => {
 
     return (
         <>
+            {/* {React.cloneElement(children, { ref: geomRef })}
+            <instancedMesh args={[null, null, 10]}>
+                <LotusNenupharDRACO id={1} />
+            </instancedMesh> */}
             <Sampler
-                transform={({ position, normal, dummy: object }) => {
-                    object.scale.setScalar(Math.random() * 0.0075)
-                    object.position.copy(position)
-                    object.lookAt(normal.add(position))
-                    object.rotation.y += Math.random() - 0.5 * (Math.PI * 0.5)
-                    object.rotation.x += Math.random() - 0.5 * (Math.PI * 0.5)
-                    object.rotation.z += Math.random() - 0.5 * (Math.PI * 0.5)
-                    object.updateMatrix()
-                    return object
-                }}
+                weight={'normal'}
                 mesh={geomRef}
-                instances={flowerRef}
-                weight='density'
-            />
-            <LotusNenupharDRACO ref={flowerRef} />
-            <PlaneTestDRACO />
+                /* transform={transformPoint} */
+            >
+                {React.cloneElement(children, { ref: geomRef })}
+                <instancedMesh args={[null, null, 10]}>
+                    <LotusNenupharDRACO id={1} />
+                </instancedMesh>
+                <mesh>
+                    <PlaneTestDRACO />
+                </mesh>
+            </Sampler>
         </>
     )
 }

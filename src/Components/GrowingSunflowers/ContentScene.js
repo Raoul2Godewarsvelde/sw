@@ -37,19 +37,17 @@ const ContentScene = ({ children }) => {
 
     return (
         <>
-            {/* {React.cloneElement(children, { ref: geomRef })}
-            <instancedMesh args={[null, null, 10]}>
-                <LotusNenupharDRACO id={1} />
-            </instancedMesh> */}
+            {/* {React.cloneElement(children, { ref: geomRef })} */}
+            <LotusNenupharDRACO />
             <Sampler
                 weight={'normal'}
                 mesh={geomRef}
                 /* transform={transformPoint} */
             >
-                {React.cloneElement(children, { ref: geomRef })}
+                {/* {React.cloneElement(children, { ref: geomRef })}
                 <instancedMesh args={[null, null, 10]}>
                     <LotusNenupharDRACO id={1} />
-                </instancedMesh>
+                </instancedMesh> */}
                 <mesh>
                     <PlaneTestDRACO />
                 </mesh>

@@ -42,7 +42,7 @@ const ContentScene = ({ children, strands = 60000, ...props }) => {
 
     return (
         <>
-            {React.cloneElement(children, { ref: geomRef })}
+            {/* {React.cloneElement(children, { ref: geomRef })}
             <instancedMesh ref={meshRef} args={[undefined, undefined, strands]} {...props}>
                 <coneGeometry args={[0.05, 1.0, 2, 20, false, 0, Math.PI]} />
                 <LayerMaterial side={THREE.DoubleSide} lighting="physical" envMapIntensity={1}>
@@ -75,7 +75,7 @@ const ContentScene = ({ children, strands = 60000, ...props }) => {
                 instances={flowerRef}
                 weight="density"
                 />
-            </group>
+            </group> */}
         </>
     )
 }

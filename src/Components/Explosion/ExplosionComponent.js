@@ -1,9 +1,17 @@
 import React from 'react'
 
+import { Scene } from '@components/Explosion/Registration/index'
+
+import '@styles/Components/Explosion/explosion.scss'
+
 const ExplosionComponent = () => {
 
     return (
-        <div>ExplosionComponent</div>
+        <div
+            id='explosion__wrapper'
+        >
+            <Scene />
+        </div>
     )
 }
 

@@ -4,8 +4,8 @@ const SceneContent = () => {
 
     return (
         <mesh scale={[10, 10, 10]} onClick={console.log('ok')}>
-            <icosahedronBufferGeometry attach='geometry' args={[3, 2]} />
-            <meshNormalMaterial attach='material' color='hotpink' />
+            <icosahedronBufferGeometry attach='geometry' args={[2, 2]} />
+            <meshNormalMaterial attach='material' color='hotpink' wireframe />
         </mesh>
     )
 }

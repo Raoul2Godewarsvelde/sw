@@ -5,6 +5,31 @@ import { useFrame } from '@react-three/fiber'
 
 const SceneContent = () => {
 
+    const PI = 3.1415926
+    const H_ANGLE = PI / 180 * 72           // 72 degree = 360 / 5
+    const V_ANGLE = Math.atan(1.0 / 2)      // elevation = 26.565 degree
+
+    const setArray = (vertices_number) => {
+        const vertices_array = []
+
+        for(let i = 0; i < vertices_number; i++) {
+            vertices_array.push({
+                x: 0,
+                y: 0,
+                z: 0
+            })
+        }
+
+        console.log('vertices_array', vertices_array)
+
+        return vertices_array
+    }
+
+    const vertices_array = setArray(12)
+
+    let hAngle1 = -PI / 2 - H_ANGLE / 2;  // start from -126 deg at 1st row
+    let hAngle2 = -PI / 2;                // start from -90 deg at 2nd row
+
     const count = 500
     let num = 0
 

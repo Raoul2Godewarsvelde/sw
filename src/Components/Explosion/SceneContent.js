@@ -5,6 +5,8 @@ import { useFrame } from '@react-three/fiber'
 
 const SceneContent = () => {
 
+    const vertices_number = 12
+    const radius = 10
     const PI = 3.1415926
     const H_ANGLE = PI / 180 * 72           // 72 degree = 360 / 5
     const V_ANGLE = Math.atan(1.0 / 2)      // elevation = 26.565 degree
@@ -20,15 +22,35 @@ const SceneContent = () => {
             })
         }
 
-        console.log('vertices_array', vertices_array)
-
         return vertices_array
     }
 
-    const vertices_array = setArray(12)
+    const vertices_array = setArray(vertices_number)
 
     let hAngle1 = -PI / 2 - H_ANGLE / 2;  // start from -126 deg at 1st row
     let hAngle2 = -PI / 2;                // start from -90 deg at 2nd row
+
+    // the first top vertex at (0, 0, r)
+    vertices_array[0] = {x: 0, y: 0, z: radius}
+    
+    for(let i = 1; i < vertices_number / 2; i++) {
+        vertices_array[i] = {
+            x: i - 1
+        }
+    }
+    
+    vertices_array[vertices_number - 1] = {x: 0, y: 0, z: -radius}
+
+
+
+
+
+
+
+
+
+
+
 
     const count = 500
     let num = 0
@@ -98,3 +120,4 @@ export default SceneContent
 
 // https://docs.pmnd.rs/react-three-fiber/API/objects
 // https://codesandbox.io/s/m7inl?file=/src/App.js
+// http://www.songho.ca/opengl/gl_sphere.html

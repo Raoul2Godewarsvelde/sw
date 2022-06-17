@@ -4,6 +4,7 @@ const aliases = (prefix = `src`) => ({
 	'@assets': `${prefix}/src/Assets`,
 	'@components': `${prefix}/src/Components`,
 	'@config': `${prefix}/src/Config`,
+	'@functions': `${prefix}/src/Functions`,
 	'@hooks': `${prefix}/src/Hooks`,
 	'@json': `${prefix}/src/Json`,
 	'@lib': `${prefix}/src/Lib`,

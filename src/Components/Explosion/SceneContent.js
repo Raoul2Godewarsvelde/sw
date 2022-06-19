@@ -32,10 +32,51 @@ const SceneContent = () => {
     const particle = useRef()
     const reperesRef = useRef()
 
-    const [vertices, indices] = useMemo(() => {
+    const setVerticesObject = (vertices_number) => {
+        let vertices_object = []
+
+        for(let i = 0; i < vertices_number; i++) {
+            vertices_object.push({x: 0, y: 0, z: 0})
+        }
+
+        return vertices_object
+    }
+
+    const [vertices, indices, normals] = useMemo(() => {
+
+        const vertices_object = setVerticesObject(12)
+
+        vertices_object[0] = {x: 0, y: radius, z: 0}
+
+        for(let i = 1; i < 6; i++) {
+            vertices_object[i] = {
+                x: Math.cos(degreesToRadians((i - 1) * 72)) * radius,
+                y: Math.sin(degreesToRadians(30)) * radius, // HAUTEUR
+                z: Math.sin(degreesToRadians((i - 1) * 72)) * radius
+            }
+        }
+
+        for(let i = 6; i < 11; i++) {
+            vertices_object[i] = {
+                x: Math.cos(degreesToRadians(((i - 1) * 72) + 31)) * radius,
+                y: -Math.sin(degreesToRadians(30)) * radius, // HAUTEUR
+                z: Math.sin(degreesToRadians(((i - 1) * 72) + 31)) * radius
+            }
+        }
+
+        vertices_object[11] = {x: 0, y: -radius, z: 0}
+
         const vertices = new Float32Array(12 * 3)
 
-        vertices[0] = 0
+        for(let i = 0; i < 12; i++) {
+            for(let j = 0; j < 3; j++) {
+                if(j === 0) vertices[(i * 3) + j] = vertices_object[i].x
+                if(j === 1) vertices[(i * 3) + j] = vertices_object[i].y
+                if(j === 2) vertices[(i * 3) + j] = vertices_object[i].z
+            }
+        }
+
+        /* vertices[0] = 0
         vertices[1] = radius // HAUTEUR
         vertices[2] = 0
 
@@ -59,7 +100,7 @@ const SceneContent = () => {
 
         vertices[33] = 0
         vertices[34] = -radius // HAUTEUR
-        vertices[35] = 0
+        vertices[35] = 0 */
 
         const indicesArr = []
 
@@ -74,30 +115,19 @@ const SceneContent = () => {
                 indicesArr.push(i - 9, i === 20 ? 6 : i - 8, 11)
             }
         }
-
-        /* indicesArr.push(0, 1, 2)
-        indicesArr.push(0, 2, 3)
-        indicesArr.push(0, 3, 4)
-        indicesArr.push(0, 4, 5)
-        indicesArr.push(0, 5, 1) */
-        /* indicesArr.push(1, 6, 2) */
-        /* indicesArr.push(6, 2, 7) */
-        /* indicesArr.push(2, 7, 3) */
-        /* indicesArr.push(7, 3, 8) */
-        /* indicesArr.push(3, 8, 4) */
-        /* indicesArr.push(8, 4, 9) */
-        /* indicesArr.push(4, 9, 5) */
-        /* indicesArr.push(9, 5, 10) */
-        /* indicesArr.push(5, 10, 1) */
-        /* indicesArr.push(10, 1, 6) */
-
-        /* indicesArr.push(11, 6, 7)
-        indicesArr.push(11, 7, 8)
-        indicesArr.push(11, 8, 9)
-        indicesArr.push(11, 9, 10)
-        indicesArr.push(11, 10, 6) */
-    
+        
         const indices =  new Uint32Array(indicesArr)
+
+        indicesArr.forEach((indice, inde) => {
+            /* console.log('indice', indice) */
+            /* const a =  */
+        })
+        
+        const normalsArr = []
+
+
+
+        const normals =  new Uint32Array(normalsArr)
 
         return [vertices, indices]
     }, [])

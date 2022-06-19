@@ -63,21 +63,39 @@ const SceneContent = () => {
 
         const indicesArr = []
 
-        indicesArr.push(0, 1, 2)
+        for(let i = 0; i < 20; i++) {
+            if(i < 5) {
+                indicesArr.push(0, i + 1, i === 4 ? 1 : i + 2)        
+            } else if(i < 10) {
+                indicesArr.push(i - 4, i + 1, i === 9 ? 1 : i - 3)
+            } else if(i < 15) {
+                indicesArr.push(i - 4, i === 14 ? 1 : i - 8, i === 14 ? 6 : i - 3)
+            } else {
+                indicesArr.push(i - 9, i === 20 ? 6 : i - 8, 11)
+            }
+        }
+
+        /* indicesArr.push(0, 1, 2)
         indicesArr.push(0, 2, 3)
         indicesArr.push(0, 3, 4)
         indicesArr.push(0, 4, 5)
-        indicesArr.push(0, 5, 1)
-        indicesArr.push(1, 6, 2)
-        indicesArr.push(6, 2, 7)
-        indicesArr.push(2, 7, 3)
-        indicesArr.push(7, 3, 8)
-        indicesArr.push(3, 8, 4)
-        indicesArr.push(8, 4, 9)
-        indicesArr.push(4, 9, 5)
-        indicesArr.push(9, 5, 10)
-        indicesArr.push(5, 10, 1)
-        indicesArr.push(10, 1, 6)
+        indicesArr.push(0, 5, 1) */
+        /* indicesArr.push(1, 6, 2) */
+        /* indicesArr.push(6, 2, 7) */
+        /* indicesArr.push(2, 7, 3) */
+        /* indicesArr.push(7, 3, 8) */
+        /* indicesArr.push(3, 8, 4) */
+        /* indicesArr.push(8, 4, 9) */
+        /* indicesArr.push(4, 9, 5) */
+        /* indicesArr.push(9, 5, 10) */
+        /* indicesArr.push(5, 10, 1) */
+        /* indicesArr.push(10, 1, 6) */
+
+        /* indicesArr.push(11, 6, 7)
+        indicesArr.push(11, 7, 8)
+        indicesArr.push(11, 8, 9)
+        indicesArr.push(11, 9, 10)
+        indicesArr.push(11, 10, 6) */
     
         const indices =  new Uint32Array(indicesArr)
 
@@ -312,7 +330,7 @@ const SceneContent = () => {
                             itemSize={3}
                         />
                     </bufferGeometry>
-                    <meshBasicMaterial attach='material' color={'yellow'} side={THREE.DoubleSide} />
+                    <meshBasicMaterial attach='material' color={'#abcdef88'} transparent side={THREE.DoubleSide} />
                 </mesh>
 
                 <points>

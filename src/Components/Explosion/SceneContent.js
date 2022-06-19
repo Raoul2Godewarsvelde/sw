@@ -1,106 +1,223 @@
-import React, { useRef, useMemo, useCallback } from 'react'
+import React, { useRef, useMemo } from 'react'
 
 import * as THREE from 'three'
-import { useFrame } from '@react-three/fiber'
 
 import degreesToRadians from '@functions/DegreesToRadians'
 
 const SceneContent = () => {
 
-    const unity = 10
-    
-    const count = 500
-    let num = 0
+    const unity = 2
+    const radius = 1 * unity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const vertices_number = 12
-    const radius = 10
-    const PI = 3.1415926
-    const H_ANGLE = PI / 180 * 72           // 72 degree = 360 / 5
-    const V_ANGLE = Math.atan(1.0 / 2)      // elevation = 26.565 degree
 
-    const line = useRef()
+    const linesRef = useRef()
+    const pointsRef = useRef()
     const particle = useRef()
     const reperesRef = useRef()
 
-    const setArray = (vertices_number) => {
-        const vertices_array = []
+    const [vertices, indices] = useMemo(() => {
+        const vertices = new Float32Array(6 * 3)
 
-        for(let i = 0; i < vertices_number * 3; i++) {
-            vertices_array.push(0)
+        vertices[0] = 0
+        vertices[1] = radius // HAUTEUR
+        vertices[2] = 0
+
+        for(let i = 1; i < 6; i++) {
+            for(let j = 0; j < 3; j++) {
+                const index = (i * 3) + j
+                if(j === 0) vertices[index] = Math.cos(degreesToRadians((i - 1) * 72)) * radius
+                if(j === 1) vertices[index] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+                if(j === 2) vertices[index] = Math.sin(degreesToRadians((i - 1) * 72)) * radius
+            }
         }
 
-        console.log('vertices_array', vertices_array)
-
-        return vertices_array
-    }
-
-    const vertices_array = setArray(vertices_number)
-
-    let hAngle1 = -PI / 2 - H_ANGLE / 2;  // start from -126 deg at 1st row
-    let hAngle2 = -PI / 2;                // start from -90 deg at 2nd row
-
-    // the first top vertex at (0, 0, r)
-    vertices_array[0] = 0
-    vertices_array[1] = 0
-    vertices_array[2] = 0
-    /* vertices_array[0] = {x: 0, y: 0, z: radius} */
-    
-    /* for(let i = 1; i < vertices_number / 2; i++) {
-        vertices_array[i] = {
-            x: 
-            y: 
-            z: 
+        /* for(let i = 6; i < 12; i++) {
+            for(let j = 0; j < 3; j++) {
+                const index = (i * 3) + j
+                if(j === 0) vertices[index] = Math.cos(degreesToRadians(((index - 3) * 72) + 31)) * radius
+                if(j === 1) vertices[index] = -Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+                if(j === 2) vertices[index] = Math.sin(degreesToRadians(((index - 5) * 72) + 31)) * radius
+            }
         }
-    } */
+
+        vertices[33] = 0
+        vertices[34] = -radius // HAUTEUR
+        vertices[35] = 0 */
+
+        const indicesArr = []
+
+        indicesArr.push(0, 1, 2)
+        indicesArr.push(0, 2, 3)
+        indicesArr.push(0, 3, 4)
+        indicesArr.push(0, 4, 5)
+        indicesArr.push(0, 5, 1)
     
-    vertices_array[vertices_number - 1] = {x: 0, y: 0, z: -radius}
+        const indices =  new Uint32Array(indicesArr)
 
+        return [vertices, indices]
+    }, [])
 
+    const [points] = useMemo(() => {
+        const points = new Float32Array(6 * 3)
 
+        points[0] = 0
+        points[1] = radius // HAUTEUR
+        points[2] = 0
 
+        for(let i = 1; i < 6; i++) {
+            for(let j = 0; j < 3; j++) {
+                const index = (i * 3) + j
+                if(j === 0) points[index] = Math.cos(degreesToRadians(i - 1) * 72) * radius
+                if(j === 1) points[index] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+                if(j === 2) points[index] = Math.sin(degreesToRadians((i - 1) * 72)) * radius
+            }
+        }
 
+        /* for(let i = 6; i < 12; i++) {
+            for(let j = 0; j < 3; j++) {
+                const index = (i * 3) + j
+                if(j === 0) vertices[index] = Math.cos(degreesToRadians(((index - 3) * 72) + 31)) * radius
+                if(j === 1) vertices[index] = -Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+                if(j === 2) vertices[index] = Math.sin(degreesToRadians(((index - 5) * 72) + 31)) * radius
+            }
+        }
 
+        vertices[33] = 0
+        vertices[34] = -radius // HAUTEUR
+        vertices[35] = 0 */
 
-
-
-
-
+        return [points]
+    }, [])
     
-    const [position] = useMemo(() => {
-        const position = new Float32Array(5 * 3)
-        /* const sizes = new Float32Array(vertices_number * 3) */
+    /* const indices = useMemo(() => {
+      }, []) */
 
-        position[0] = 0
-        position[1] = radius // HAUTEUR
-        position[2] = 0
+    const [position2] = useMemo(() => {
+        const position2 = new Float32Array(24 * 3)
 
-        position[3] = Math.cos(degreesToRadians(0)) * radius
-        position[4] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
-        position[5] = 0
+        position2[0] = 0
+        position2[1] = radius // HAUTEUR
+        position2[2] = 0
 
-        position[6] = Math.cos(degreesToRadians(72)) * radius
-        position[7] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
-        position[8] = 0
+        position2[3] = Math.cos(degreesToRadians(0)) * radius
+        position2[4] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[5] = Math.sin(degreesToRadians(0)) * radius
 
-        position[9] = Math.cos(degreesToRadians(144)) * radius
-        position[10] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
-        position[11] = 0
+        position2[6] = 0
+        position2[7] = radius // HAUTEUR
+        position2[8] = 0
 
-        position[12] = Math.cos(degreesToRadians(216)) * radius
-        position[13] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
-        position[14] = 0
+        position2[9] = Math.cos(degreesToRadians(72)) * radius
+        position2[10] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[11] = Math.sin(degreesToRadians(72)) * radius
+
+        position2[12] = 0
+        position2[13] = radius // HAUTEUR
+        position2[14] = 0
+
+        position2[15] = Math.cos(degreesToRadians(144)) * radius
+        position2[16] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[17] = Math.sin(degreesToRadians(144)) * radius
+
+        position2[18] = 0
+        position2[19] = radius // HAUTEUR
+        position2[20] = 0
+
+        position2[21] = Math.cos(degreesToRadians(216)) * radius
+        position2[22] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[23] = Math.sin(degreesToRadians(216)) * radius
+
+        position2[24] = 0
+        position2[25] = radius // HAUTEUR
+        position2[26] = 0
+
+        position2[27] = Math.cos(degreesToRadians(288)) * radius
+        position2[28] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[29] = Math.sin(degreesToRadians(288)) * radius
 
 
-        /* for(let i = 1; i < 6; i++) {
+        position2[30] = Math.cos(degreesToRadians(0)) * radius
+        position2[31] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[32] = Math.sin(degreesToRadians(0)) * radius
 
-        } */
+        position2[33] = Math.cos(degreesToRadians(72)) * radius
+        position2[34] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[35] = Math.sin(degreesToRadians(72)) * radius
 
-        /* for (let i = 0; i < count * 3; i++) {
-            position[i] = (Math.random() - 0.5) * 10
-            sizes[i] = Math.random() < 0.03 ? 15 : 6
-        } */
 
-        return [position/* , sizes */]
+        position2[36] = Math.cos(degreesToRadians(72)) * radius
+        position2[37] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[38] = Math.sin(degreesToRadians(72)) * radius
+
+        position2[39] = Math.cos(degreesToRadians(144)) * radius
+        position2[40] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[41] = Math.sin(degreesToRadians(144)) * radius
+
+
+        position2[42] = Math.cos(degreesToRadians(144)) * radius
+        position2[43] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[44] = Math.sin(degreesToRadians(144)) * radius
+
+        position2[45] = Math.cos(degreesToRadians(216)) * radius
+        position2[46] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[47] = Math.sin(degreesToRadians(216)) * radius
+
+
+        position2[48] = Math.cos(degreesToRadians(216)) * radius
+        position2[49] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[50] = Math.sin(degreesToRadians(216)) * radius
+
+        position2[51] = Math.cos(degreesToRadians(288)) * radius
+        position2[52] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[53] = Math.sin(degreesToRadians(288)) * radius
+
+
+        position2[54] = Math.cos(degreesToRadians(288)) * radius
+        position2[55] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[56] = Math.sin(degreesToRadians(288)) * radius
+        
+        position2[57] = Math.cos(degreesToRadians(360)) * radius
+        position2[58] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[59] = Math.sin(degreesToRadians(360)) * radius
+
+
+
+
+        position2[60] = Math.cos(degreesToRadians(0)) * radius
+        position2[61] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[62] = Math.sin(degreesToRadians(0)) * radius
+
+        position2[63] = Math.cos(degreesToRadians(31)) * radius
+        position2[64] = -Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[65] = Math.sin(degreesToRadians(31)) * radius
+
+
+        position2[66] = Math.cos(degreesToRadians(31)) * radius
+        position2[67] = -Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[68] = Math.sin(degreesToRadians(31)) * radius
+
+        position2[69] = Math.cos(degreesToRadians(72)) * radius
+        position2[70] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+        position2[71] = Math.sin(degreesToRadians(72)) * radius
+
+        return [position2]
     }, [])
     
     const [reperes] = useMemo(() => {
@@ -145,66 +262,23 @@ const SceneContent = () => {
         return [reperes]
     }, [])
 
-    /* useFrame(() => {
-        if (line.current && num < count && particle.current) {
-            line.current.setDrawRange(0, 10)
-            particle.current.setDrawRange(0, 50)
-            num++
-        }
-    }) */
-
-
-
-
-
-
-
-
-
-
-
-
-    /* const count = 500
-    let num = 0
-
-    const line = useRef()
-    const particle = useRef()
-    
-    const [positions, sizes] = useMemo(() => {
-        const positions = new Float32Array(count * 3)
-        const sizes = new Float32Array(count * 3)
-
-        for (let i = 0; i < count * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 10
-            sizes[i] = Math.random() < 0.03 ? 15 : 6
-        }
-
-        return [positions, sizes]
-    }, [])
-
-    useFrame(() => {
-        if (line.current && num < count && particle.current) {
-            line.current.setDrawRange(0, 10)
-            particle.current.setDrawRange(0, 50)
-            num++
-        }
-    }) */
-
     return (
         <>
-            {/* <mesh scale={[10, 10, 10]} onClick={console.log('ok')}>
+            <mesh scale={[10, 10, 10]} onClick={console.log('ok')}>
                 <icosahedronBufferGeometry attach='geometry' args={[2, 2]} />
                 <meshNormalMaterial attach='material' wireframe />
-            </mesh> */}
+            </mesh>
+
             <group>
                 {/* <lineSegments>
-                    <bufferGeometry ref={line}>
-                    <bufferAttribute
-                        attach='attributes-position'
-                        count={position.length / 3}
-                        array={position}
-                        itemSize={3}
-                    />
+                    <bufferGeometry ref={linesRef}>
+                        <bufferAttribute
+                            attach='attributes-position'
+                            count={position2.length / 3}
+                            array={position2}
+                            itemSize={3}
+                            drawrangle={(0, 0)}
+                        />
                     </bufferGeometry>
                     <lineBasicMaterial
                         attach='material'
@@ -212,18 +286,36 @@ const SceneContent = () => {
                         linewidth={0.3}
                     />
                 </lineSegments> */}
-                <points>
+
+                <mesh>
                     <bufferGeometry ref={particle}>
                         <bufferAttribute
+                            attach='index'
+                            count={indices.length}
+                            array={indices}
+                            itemSize={1}
+                        />
+                        <bufferAttribute
                             attach='attributes-position'
-                            count={position.length / 3}
-                            array={position}
+                            count={vertices.length / 3}
+                            array={vertices}
+                            itemSize={3}
+                        />
+                    </bufferGeometry>
+                    <meshBasicMaterial attach='material' color={'yellow'} side={THREE.DoubleSide} />
+                </mesh>
+
+                <points>
+                    <bufferGeometry ref={pointsRef}>
+                        <bufferAttribute
+                            attach='attributes-position'
+                            count={points.length / 3}
+                            array={points}
                             itemSize={3}
                         />
                     </bufferGeometry>
                     <pointsMaterial size={0.3} color={'white'} />
                 </points>
-
 
                 <points>
                     <bufferGeometry ref={reperesRef}>

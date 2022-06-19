@@ -33,7 +33,7 @@ const SceneContent = () => {
     const reperesRef = useRef()
 
     const [vertices, indices] = useMemo(() => {
-        const vertices = new Float32Array(6 * 3)
+        const vertices = new Float32Array(12 * 3)
 
         vertices[0] = 0
         vertices[1] = radius // HAUTEUR
@@ -48,18 +48,18 @@ const SceneContent = () => {
             }
         }
 
-        /* for(let i = 6; i < 12; i++) {
+        for(let i = 6; i < 12; i++) {
             for(let j = 0; j < 3; j++) {
                 const index = (i * 3) + j
-                if(j === 0) vertices[index] = Math.cos(degreesToRadians(((index - 3) * 72) + 31)) * radius
+                if(j === 0) vertices[index] = Math.cos(degreesToRadians(((i - 1) * 72) + 31)) * radius
                 if(j === 1) vertices[index] = -Math.sin(degreesToRadians(30)) * radius // HAUTEUR
-                if(j === 2) vertices[index] = Math.sin(degreesToRadians(((index - 5) * 72) + 31)) * radius
+                if(j === 2) vertices[index] = Math.sin(degreesToRadians(((i - 1) * 72) + 31)) * radius
             }
         }
 
         vertices[33] = 0
         vertices[34] = -radius // HAUTEUR
-        vertices[35] = 0 */
+        vertices[35] = 0
 
         const indicesArr = []
 
@@ -68,6 +68,16 @@ const SceneContent = () => {
         indicesArr.push(0, 3, 4)
         indicesArr.push(0, 4, 5)
         indicesArr.push(0, 5, 1)
+        indicesArr.push(1, 6, 2)
+        indicesArr.push(6, 2, 7)
+        indicesArr.push(2, 7, 3)
+        indicesArr.push(7, 3, 8)
+        indicesArr.push(3, 8, 4)
+        indicesArr.push(8, 4, 9)
+        indicesArr.push(4, 9, 5)
+        indicesArr.push(9, 5, 10)
+        indicesArr.push(5, 10, 1)
+        indicesArr.push(10, 1, 6)
     
         const indices =  new Uint32Array(indicesArr)
 
@@ -75,7 +85,7 @@ const SceneContent = () => {
     }, [])
 
     const [points] = useMemo(() => {
-        const points = new Float32Array(6 * 3)
+        const points = new Float32Array(12 * 3)
 
         points[0] = 0
         points[1] = radius // HAUTEUR
@@ -90,18 +100,18 @@ const SceneContent = () => {
             }
         }
 
-        /* for(let i = 6; i < 12; i++) {
+        for(let i = 6; i < 12; i++) {
             for(let j = 0; j < 3; j++) {
                 const index = (i * 3) + j
-                if(j === 0) vertices[index] = Math.cos(degreesToRadians(((index - 3) * 72) + 31)) * radius
-                if(j === 1) vertices[index] = -Math.sin(degreesToRadians(30)) * radius // HAUTEUR
-                if(j === 2) vertices[index] = Math.sin(degreesToRadians(((index - 5) * 72) + 31)) * radius
+                if(j === 0) points[index] = Math.cos(degreesToRadians(((i - 1) * 72) + 31)) * radius
+                if(j === 1) points[index] = -Math.sin(degreesToRadians(30)) * radius // HAUTEUR
+                if(j === 2) points[index] = Math.sin(degreesToRadians(((i - 1) * 72) + 31)) * radius
             }
         }
 
         vertices[33] = 0
         vertices[34] = -radius // HAUTEUR
-        vertices[35] = 0 */
+        vertices[35] = 0
 
         return [points]
     }, [])
@@ -314,7 +324,7 @@ const SceneContent = () => {
                             itemSize={3}
                         />
                     </bufferGeometry>
-                    <pointsMaterial size={0.3} color={'white'} />
+                    <pointsMaterial size={0.3} color={'blue'} />
                 </points>
 
                 <points>

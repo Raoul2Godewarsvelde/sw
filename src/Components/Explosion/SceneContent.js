@@ -76,32 +76,6 @@ const SceneContent = () => {
             }
         }
 
-        /* vertices[0] = 0
-        vertices[1] = radius // HAUTEUR
-        vertices[2] = 0
-
-        for(let i = 1; i < 6; i++) {
-            for(let j = 0; j < 3; j++) {
-                const index = (i * 3) + j
-                if(j === 0) vertices[index] = Math.cos(degreesToRadians((i - 1) * 72)) * radius
-                if(j === 1) vertices[index] = Math.sin(degreesToRadians(30)) * radius // HAUTEUR
-                if(j === 2) vertices[index] = Math.sin(degreesToRadians((i - 1) * 72)) * radius
-            }
-        }
-
-        for(let i = 6; i < 12; i++) {
-            for(let j = 0; j < 3; j++) {
-                const index = (i * 3) + j
-                if(j === 0) vertices[index] = Math.cos(degreesToRadians(((i - 1) * 72) + 31)) * radius
-                if(j === 1) vertices[index] = -Math.sin(degreesToRadians(30)) * radius // HAUTEUR
-                if(j === 2) vertices[index] = Math.sin(degreesToRadians(((i - 1) * 72) + 31)) * radius
-            }
-        }
-
-        vertices[33] = 0
-        vertices[34] = -radius // HAUTEUR
-        vertices[35] = 0 */
-
         const indicesArr = []
 
         for(let i = 0; i < 20; i++) {
@@ -129,7 +103,7 @@ const SceneContent = () => {
 
         const normals =  new Uint32Array(normalsArr)
 
-        return [vertices, indices]
+        return [vertices, indices, normals]
     }, [])
 
     const [points] = useMemo(() => {
@@ -357,6 +331,12 @@ const SceneContent = () => {
                             attach='attributes-position'
                             count={vertices.length / 3}
                             array={vertices}
+                            itemSize={3}
+                        />
+                        <bufferAttribute
+                            attach='attributes-normal'
+                            count={normals.length / 3}
+                            array={normals}
                             itemSize={3}
                         />
                     </bufferGeometry>

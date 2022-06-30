@@ -1,5 +1,11 @@
+import Lights from '../Lights'
 import PlanComponent from '../PlanComponent'
+import Scene from '../Scene'
+import SceneContent from '../SceneContent'
 
 export {
-    PlanComponent
+    Lights,
+    PlanComponent,
+    Scene,
+    SceneContent
 }

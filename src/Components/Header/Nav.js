@@ -25,6 +25,11 @@ const Nav = () => {
                     </Link>
                 </li>
                 <li>
+                    <Link to='/plan'>
+                        Plan
+                    </Link>
+                </li>
+                <li>
                     <Link to='/ray_marching'>
                         Ray marching
                     </Link>

@@ -6,6 +6,8 @@ import Home from '@pages/Home/index'
 import Explosion from '@pages/Explosion/index'
 import Photography from '@pages/Photography/index'
 
+import Plan from '@pages/Plan/index'
+
 import RayMarching from '@pages/RayMarching/index'
 import GrowingSunflowers from '@pages/GrowingSunflowers/index'
 
@@ -21,6 +23,8 @@ function App() {
           
           <Route path='/explosion' element={<Explosion />} />
           <Route path='/photography' element={<Photography />} />
+
+          <Route path='/plan' element={<Plan />} />
 
           <Route path='/ray_marching' element={<RayMarching />} />
           <Route path='/growing_sunflowers' element={<GrowingSunflowers />} />
